@@ -1,4 +1,4 @@
-import { Box, Button, Dialog, DialogActions, Grid, TextField } from '@mui/material'
+import { Box, Button, Dialog, DialogActions, Grid, Snackbar, TextField } from '@mui/material'
 import type { NextPage } from 'next'
 import { Professor } from '../src/@types/professor'
 import Lista from '../src/components/Lista/Lista'
@@ -12,7 +12,11 @@ const Home: NextPage = () => {
     setNome, 
     email, 
     setEmail, 
-    professorSelecionado, setProfessorSelecionado 
+    professorSelecionado, 
+    setProfessorSelecionado,
+    marcarAula,
+    mensagem,
+    setMensagem 
   }  = useIndex();
   
   return (
@@ -23,7 +27,7 @@ const Home: NextPage = () => {
           onSelect={(professor) => setProfessorSelecionado(professor)}
         ></Lista>
       </Box>
-      <Dialog open={true} fullWidth PaperProps={{sx: {p: 5}}}>
+      <Dialog onClose={() => setProfessorSelecionado(null)} open={professorSelecionado !== null} fullWidth PaperProps={{sx: {p: 5}}}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField 
@@ -47,10 +51,18 @@ const Home: NextPage = () => {
         </Grid>
 
         <DialogActions sx={{mt: 5}}>
-          <Button>Cancelar</Button>
-          <Button>Marcar</Button>
+          <Button onClick={() => setProfessorSelecionado(null)}>Cancelar</Button>
+          <Button onClick={() => marcarAula()} >Marcar</Button>
         </DialogActions>
       </Dialog>
+
+      <Snackbar 
+      message={mensagem} 
+      open={mensagem.length > 0}
+      autoHideDuration={2500} 
+      onClose={() => setMensagem('')}
+      />
+
    </div>
   )
 }

@@ -35,7 +35,7 @@ class CadastrarAulaAPIView(APIView):
             return Response(aula_serializer.data, status=HTTP_201_CREATED)
         return Response(
             {
-                "message": "Houveram erros de validação",
+                "message": "Houve erros de validação",
                  "errors": serializer.errors}
                  , status=HTTP_400_BAD_REQUEST
             )
